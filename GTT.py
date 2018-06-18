@@ -93,7 +93,7 @@ def exportXY(dot_list,x_scale):
     Return the y_val for the wanted_x - assuming that (x1,y1),(x2,y2)
     creates a straight line
     '''
-    def calcY_ValOnStraightLine(wanted_x,x1,y1,x2,y2):
+    def _calcY_ValOnStraightLine(wanted_x,x1,y1,x2,y2):
         # y = mx + n
         m = (y2-y1)/(x2-x1)
         n = y1-(m*x1)
@@ -128,7 +128,7 @@ def exportXY(dot_list,x_scale):
             elif x_after == -1:
                 output[x_before] = y_before
             else:
-                output[i] = calcY_ValOnStraightLine(i,x_before,y_before,x_after,y_after)
+                output[i] = _calcY_ValOnStraightLine(i,x_before,y_before,x_after,y_after)
     
     return output
 

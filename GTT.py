@@ -106,7 +106,6 @@ def exportXY(dot_list,x_scale):
         tmp_out[xi] = yi 
 
     x = [xi for xi,_ in sorted_res]
-    #y = [yi for _,yi in sorted_res]
 
     output = {}
 

@@ -51,15 +51,15 @@ Helper func - verifies the given dot is valid for output.
 def _verifyDot(pt,rec_list,x_axis=None,y_axis=None):
     EPSILON = 15
 
-    # No points on axes
+    # No points on axes or on negative side of x axees
     if not (x_axis is None or y_axis is None):
-        sorted_x_axis = sorted(x_axis,key=lambda pt:pt[1])
-        sorted_y_axis = sorted(y_axis,key=lambda pt:pt[0])
-        
-        x_axis_y_min = sorted_x_axis[0][1]
-        x_axis_y_max = sorted_x_axis[-1][1]
-        y_axis_x_min = sorted_y_axis[0][0]
-        y_axis_x_max = sorted_y_axis[-1][0]
+        if pt[0] < y_axis[0][0]:
+            return False
+
+        x_axis_y_min = x_axis[0][1]
+        x_axis_y_max = x_axis[-1][1]
+        y_axis_x_min = y_axis[0][0]
+        y_axis_x_max = y_axis[-1][0]
         
         if (pt[1] >= (x_axis_y_min-EPSILON) and pt[1] <= (x_axis_y_max+EPSILON)) or (pt[0] >= (y_axis_x_min-EPSILON) and pt[0] <= (y_axis_x_max+EPSILON)):
                 return False
@@ -79,7 +79,9 @@ def getGraphPoints(source,x_axis,y_axis,rec_list):
     points,_,_ = getGraphRaw(source,rec_list)
 
     sorted_points = sorted(points, key=lambda y: y[1])
-    filtered_points = [pt for pt in sorted_points if _verifyDot(pt,rec_list,x_axis,y_axis)]
+    sorted_x_axis = sorted(x_axis,key=lambda pt:pt[1])
+    sorted_y_axis = sorted(y_axis,key=lambda pt:pt[0])
+    filtered_points = [pt for pt in sorted_points if _verifyDot(pt,rec_list,sorted_x_axis,sorted_y_axis)]
 
     if len(filtered_points) == 0:
         filtered_points = None

@@ -168,12 +168,6 @@ if __name__=="__main__":
         stopRun("Source file received doesn't exist")
 
     filename, file_extension = getFileNameAndExtension(source)
-    
-    create_image = False
-    if file_extension.upper() != ".PNG":
-        source, create_image = convertImageToPNG(source)
-        if source is None:
-            stopRun("Couldn't convert image to PNG")    
 
     print("Starting data extraction from the image")
     dot_list = pic2data(source,logLevel,args.x_y_max)
@@ -195,7 +189,4 @@ if __name__=="__main__":
 
     createEXCEL(f_name + str(index), modified_dot_list)
 
-    if create_image:
-        deleteFile(source)
-    
     print("Done")
